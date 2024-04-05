@@ -1,0 +1,71 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>E-commerce PWA</title>
+    <link rel="stylesheet" href="main.css" />
+
+    <link rel="manifest" href="manifest.json" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Shop</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="product-grid">
+        <!-- Product cards will be dynamically generated here -->
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2024 Vibrant E-commerce. All rights reserved.</p>
+    </footer>
+    <script src="script.js"></script>
+    <script src="app.js"></script>
+    <script>
+      // Add event listener to execute code when page loads
+      window.addEventListener("load", () => {
+        // Call registerSW function when page loads
+        registerSW();
+      });
+
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("/service-worker.js")
+            .then((registration) => {
+              console.log(
+                "Service Worker registered with scope:",
+                registration.scope
+              );
+            })
+            .catch((error) => {
+              console.error("Service Worker registration failed:", error);
+            });
+        });
+      }
+
+      // Register the Service Worker
+      async function registerSW() {
+        // Check if browser supports Service Worker
+        if ("serviceWorker" in navigator) {
+          try {
+            // Register the Service Worker named 'serviceworker.js'
+            await navigator.serviceworker.register("service-worker.js");
+          } catch (e) {
+            // Log error message if registration fails
+            console.log("SW registration failed");
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
